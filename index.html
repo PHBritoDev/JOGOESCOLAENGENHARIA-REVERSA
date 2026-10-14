@@ -23,7 +23,7 @@ footer{text-align:center;color:#7484a4;font-size:10px;margin-top:14px}
 </head>
 <body>
 <main>
-<header class="top"><h1><span class="logo">◆ DINO</span> RUN</h1><span class="tag">AVENTURA INFINITA · v2</span></header>
+<header class="top"><h1><span class="logo">◆ DINO</span> RUN</h1><span class="tag">MUNDOS VIVOS · v3</span></header>
 <section class="card" aria-label="Dino Run">
 <div class="hud">
  <div class="stats">
@@ -62,7 +62,10 @@ const events=[
 {name:'🌧️ CHUVA FORTE',kind:'rain',duration:1400},
 {name:'🌙 NOITE ESTRELADA',kind:'night',duration:1500},
 {name:'🌠 CHUVA DE ESTRELAS',kind:'meteor',duration:1300},
-{name:'🌫️ NEBLINA MISTERIOSA',kind:'fog',duration:1250}
+{name:'🌫️ NEBLINA MISTERIOSA',kind:'fog',duration:1250},
+{name:'🌋 VALE DOS VULCÕES',kind:'volcano',duration:1450},
+{name:'🔥 INFERNO ARDENTE',kind:'hell',duration:1400},
+{name:'🪐 VIAGEM PELO ESPAÇO',kind:'space',duration:1550}
 ];
 try{best=Number(localStorage.getItem('dino2-best')||0);coins=Number(localStorage.getItem('dino2-coins')||0);currentSkin=localStorage.getItem('dino2-skin')||'classic';owned=JSON.parse(localStorage.getItem('dino2-owned')||'["classic"]');if(!owned.includes('classic'))owned.unshift('classic');if(!skins.some(s=>s.id===currentSkin)||!owned.includes(currentSkin))currentSkin='classic'}catch(_){}
 $('best').textContent=fmt(best);$('coins').textContent=coins;
@@ -107,7 +110,8 @@ function spawn(){const bird=score>180&&Math.random()<.27;const z=bird?{w:38,h:24
 function collide(o){const dx=dino.x+(dino.duck?4:5),dy=(dino.duck?ground-dino.h:dino.y)+6,dw=dino.w-(dino.duck?8:10),dh=dino.h-11;return dx<o.x+o.w-5&&dx+dw>o.x+4&&dy<o.y+o.h-3&&dy+dh>o.y+3}
 function drawDino(){
  const s=skin(),x=dino.x,y=dino.y,w=dino.duck?48:38,h=dino.duck?28:46,top=dino.duck?ground-h:y;dino.w=w;dino.h=h;
- ctx.save();ctx.shadowColor=s.color;ctx.shadowBlur=s.id==='classic'?0:12;
+ ctx.save();ctx.globalAlpha=dino.grounded?.22:Math.max(.06,.2-(ground-(dino.y+dino.h))*.0015);ctx.fillStyle='#0a1020';ctx.beginPath();ctx.ellipse(x+19,ground+2,dino.grounded?25:Math.max(10,25-(ground-(dino.y+dino.h))*.25),5,0,0,Math.PI*2);ctx.fill();ctx.restore();
+ ctx.save();ctx.shadowColor=s.color;ctx.shadowBlur=s.id==='classic'?5:18;
  rect(x+5,top+14,19,22,s.color);rect(x+15,top+3,18,20,s.color);rect(x+26,top+8,15,10,s.color);rect(x+19,top,5,5,s.accent);rect(x+31,top+10,3,3,'#fff');rect(x+32,top+11,1,1,'#18243a');rect(x,top+21,10,5,s.color);rect(x+8,top+29,9,4,s.accent);
  ctx.restore();
  if(!dino.grounded){rect(x+8,top+34,6,11,s.color);rect(x+24,top+34,6,9,s.color)}
@@ -135,26 +139,39 @@ function update(){
 function drawSky(){
  const kind=events[eventIndex].kind;
  let top='#73c5e8',bottom='#e1f4ef';
- if(kind==='night'){top='#111c43';bottom='#394b73'}if(kind==='meteor'){top='#17143d';bottom='#5b477e'}if(kind==='rain'){top='#394d6a';bottom='#8babb7'}if(kind==='fog'){top='#7d94a8';bottom='#c1d1d6'}
+ if(kind==='night'){top='#111c43';bottom='#394b73'}if(kind==='meteor'){top='#17143d';bottom='#5b477e'}if(kind==='rain'){top='#394d6a';bottom='#8babb7'}if(kind==='fog'){top='#7d94a8';bottom='#c1d1d6'}if(kind==='volcano'){top='#241b35';bottom='#ed7047'}if(kind==='hell'){top='#180c1b';bottom='#8d242a'}if(kind==='space'){top='#030817';bottom='#172b5c'}
  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,top);g.addColorStop(1,bottom);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
- if(kind==='night'||kind==='meteor'){
+ if(['night','meteor','space'].includes(kind)){
   stars.forEach(s=>{const tw=.5+.5*Math.sin(frame*.04+s.tw);ctx.globalAlpha=.45+tw*.55;rect(s.x,s.y,s.r+0.5,s.r+0.5,kind==='meteor'?'#ffe4ff':'#fff8cb')});ctx.globalAlpha=1;
-  ctx.fillStyle=kind==='meteor'?'#e4d9ff':'#fff2c2';ctx.beginPath();ctx.arc(690,55,kind==='meteor'?17:22,0,Math.PI*2);ctx.fill();
-  if(kind==='meteor'){for(let i=0;i<3;i++){const mx=(W-((frame*3+i*275)%(W+120))),my=35+(i*41)%100;ctx.strokeStyle='#ffe7ff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(mx+24,my-10);ctx.stroke()}}
- }else if(kind==='day'){ctx.fillStyle='#ffe7a1';ctx.beginPath();ctx.arc(690,55,22,0,Math.PI*2);ctx.fill()}
- // distant hills move at a slower speed
- ctx.fillStyle=kind==='night'?'#26385b':kind==='rain'?'#728f9d':'#9bc8b8';ctx.beginPath();ctx.moveTo(0,ground);for(let x=0;x<=W;x+=20)ctx.lineTo(x,ground-28-Math.sin(x*.018+frame*.002)*17-Math.sin(x*.04)*8);ctx.lineTo(W,ground);ctx.fill();
- clouds.forEach(c=>{ctx.globalAlpha=kind==='night'?.16:.28;ctx.fillStyle=kind==='rain'?'#273b52':'#fff';ctx.beginPath();ctx.ellipse(c.x,c.y,24*c.s,7*c.s,0,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;
+  if(kind==='space'){
+   const planets=[{x:660,y:65,r:31,c:'#b06cff',ring:true},{x:130,y:83,r:15,c:'#52d9e8',ring:false},{x:420,y:34,r:8,c:'#f2b87a',ring:false}];
+   planets.forEach(p=>{ctx.save();ctx.shadowColor=p.c;ctx.shadowBlur=22;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;if(p.ring){ctx.strokeStyle='#f2c4ff';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(p.x,p.y,p.r+14,8,-.25,0,Math.PI*2);ctx.stroke()}ctx.restore()});
+   for(let i=0;i<4;i++){let sx=(W-((frame*2+i*231)%(W+90))),sy=28+(i*53)%120;ctx.strokeStyle='#a9dcff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+25,sy-8);ctx.stroke()}
+  }else{
+   ctx.fillStyle=kind==='meteor'?'#e4d9ff':'#fff2c2';ctx.beginPath();ctx.arc(690,55,kind==='meteor'?17:22,0,Math.PI*2);ctx.fill();
+   if(kind==='meteor'){for(let i=0;i<3;i++){const mx=(W-((frame*3+i*275)%(W+120))),my=35+(i*41)%100;ctx.strokeStyle='#ffe7ff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(mx+24,my-10);ctx.stroke()}}
+  }
+ }else if(kind==='day'){ctx.save();ctx.shadowColor='#ffe7a1';ctx.shadowBlur=28;ctx.fillStyle='#ffe7a1';ctx.beginPath();ctx.arc(690,55,22,0,Math.PI*2);ctx.fill();ctx.restore()}
+ if(kind==='volcano'||kind==='hell'){
+  ctx.fillStyle=kind==='hell'?'#421522':'#503447';ctx.beginPath();ctx.moveTo(0,ground);ctx.lineTo(90,ground-83);ctx.lineTo(150,ground-34);ctx.lineTo(255,ground-123);ctx.lineTo(330,ground-35);ctx.lineTo(470,ground-102);ctx.lineTo(555,ground-28);ctx.lineTo(675,ground-95);ctx.lineTo(800,ground-20);ctx.lineTo(800,ground);ctx.fill();
+  ctx.fillStyle=kind==='hell'?'#210f20':'#29273d';ctx.beginPath();ctx.moveTo(0,ground);ctx.lineTo(145,ground-48);ctx.lineTo(260,ground-25);ctx.lineTo(385,ground-88);ctx.lineTo(485,ground-27);ctx.lineTo(640,ground-61);ctx.lineTo(800,ground-33);ctx.lineTo(800,ground);ctx.fill();
+  for(let i=0;i<4;i++){const lx=(i*211+frame*.4)%(W);ctx.save();ctx.globalAlpha=.65+.25*Math.sin(frame*.08+i);ctx.shadowColor='#ff4a24';ctx.shadowBlur=16;ctx.fillStyle=kind==='hell'?'#ff4538':'#ff9d45';ctx.beginPath();ctx.ellipse(lx,ground-7,8,3+Math.sin(frame*.1+i)*2,0,0,Math.PI*2);ctx.fill();ctx.restore()}
+ }else{
+  ctx.fillStyle=kind==='space'?'#121d45':kind==='night'?'#26385b':kind==='rain'?'#728f9d':'#9bc8b8';ctx.beginPath();ctx.moveTo(0,ground);for(let x=0;x<=W;x+=20)ctx.lineTo(x,ground-28-Math.sin(x*.018+frame*.002)*17-Math.sin(x*.04)*8);ctx.lineTo(W,ground);ctx.fill();
+ }
+ clouds.forEach(c=>{ctx.globalAlpha=kind==='night'||kind==='space'?.16:.28;ctx.fillStyle=kind==='rain'?'#273b52':'#fff';ctx.beginPath();ctx.ellipse(c.x,c.y,24*c.s,7*c.s,0,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;
  if(kind==='fog'){const fg=ctx.createLinearGradient(0,130,0,ground);fg.addColorStop(0,'#d9e8ed00');fg.addColorStop(1,'#e1edf0b8');ctx.fillStyle=fg;ctx.fillRect(0,100,W,ground-100)}
 }
 function render(){
  drawSky();const kind=events[eventIndex].kind;
- ctx.fillStyle=kind==='night'||kind==='meteor'?'#1c2942':kind==='rain'?'#5c7886':'#d7dfd1';ctx.fillRect(0,ground,W,H-ground);
- ctx.fillStyle=kind==='night'||kind==='meteor'?'#94a5c4':'#526e63';ctx.fillRect(0,ground,W,3);
+ ctx.fillStyle=kind==='night'||kind==='meteor'||kind==='space'?'#1c2942':kind==='rain'?'#5c7886':kind==='volcano'?'#32283a':kind==='hell'?'#271522':'#d7dfd1';ctx.fillRect(0,ground,W,H-ground);
+ if(kind==='volcano'||kind==='hell'){for(let i=0;i<18;i++){const lx=(i*61-frame*speed*.55)%(W+50);ctx.save();ctx.shadowColor='#ff4d26';ctx.shadowBlur=9;ctx.strokeStyle=kind==='hell'?'#ff563b':'#ffb04c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(lx,ground+7);ctx.lineTo(lx+5,ground+13);ctx.lineTo(lx-2,ground+20);ctx.stroke();ctx.restore()}}
+ ctx.fillStyle=kind==='night'||kind==='meteor'||kind==='space'?'#94a5c4':kind==='volcano'||kind==='hell'?'#ff8754':'#526e63';ctx.fillRect(0,ground,W,3);
  for(let i=0;i<26;i++){let x=(i*37-frame*speed)%(W+30);if(x<0)x+=W+30;rect(x,ground+12+(i%4)*9,12+(i%3)*5,2,kind==='night'?'#41516a':'#a5b7a4')}
  obstacles.forEach(drawObstacle);dust.forEach(p=>rect(p.x,p.y,3,3,p.color||'#fff'));
  drawDino();
  if(kind==='rain'){ctx.strokeStyle='#c6eaff88';ctx.lineWidth=1.4;rain.forEach(p=>{ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-5,p.y+p.len);ctx.stroke()})}
+ if(kind==='volcano'||kind==='hell'){for(let i=0;i<25;i++){const ex=(i*47-frame*(1+(i%3)*.35))%W,ey=ground-((frame*1.7+i*29)%115);ctx.save();ctx.globalAlpha=.35+.45*Math.sin(frame*.06+i);ctx.fillStyle=i%3?'#ff9b45':'#ffeb9a';ctx.shadowColor='#ff5a22';ctx.shadowBlur=8;ctx.fillRect(ex,ey,2+(i%2),2+(i%2));ctx.restore()}}
  if(kind==='fog'){ctx.fillStyle='#e4f0f488';ctx.fillRect(0,ground-60,W,55)}
  if(kind==='meteor'&&frame%3===0){ctx.fillStyle='#ffeaff';ctx.beginPath();ctx.arc((frame*5)%W,45+Math.sin(frame*.03)*20,2,0,Math.PI*2);ctx.fill()}
  if(state==='ready'||state==='over'){ctx.fillStyle='#ffffff80';ctx.fillRect(0,ground+30,W,1)}
