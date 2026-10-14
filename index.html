@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#f7f7f7">
+<title>Dino Run — Joguinho do Dinossauro</title>
+<style>
+:root{color-scheme:light;--ink:#454545;--muted:#888;--line:#dedede;--paper:#fff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f6f6f6;color:var(--ink)}
+body{display:grid;place-items:center;padding:18px}
+main{width:min(920px,100%)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 12px}
+h1{font-size:clamp(20px,4vw,30px);letter-spacing:-1.5px;margin:0}
+.tag{font-size:11px;color:#777;border:1px solid #ddd;border-radius:99px;padding:6px 9px;white-space:nowrap}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:clamp(12px,3vw,22px);box-shadow:0 8px 30px #00000008}
+.hud{display:flex;justify-content:flex-end;gap:24px;font-weight:800;font-size:14px;margin:0 2px 12px}
+.hud span{color:#777;font-size:10px;letter-spacing:1px;margin-right:5px}
+.stage{position:relative;overflow:hidden;border:1px solid #eee;border-radius:10px;background:#fff;touch-action:manipulation}
+canvas{display:block;width:100%;height:auto;aspect-ratio:800/270;outline:none}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#ffffffd9;padding:20px}
+.overlay[hidden]{display:none}
+.overlay h2{font-size:clamp(23px,5vw,36px);letter-spacing:-1.5px;margin:0 0 8px}
+.overlay p{font-size:13px;color:#666;margin:0 0 18px;line-height:1.6}
+button{font:inherit;font-weight:800;border:0;border-radius:10px;padding:12px 18px;background:#424242;color:white;cursor:pointer;touch-action:manipulation}
+button:active{transform:translateY(1px)}
+.help{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;color:#777;font-size:11px;line-height:1.6}
+.mobile{display:none;gap:10px}.mobile button{flex:1}
+footer{text-align:center;color:#aaa;font-size:10px;margin-top:14px}
+@media(max-width:560px){body{padding:10px}.top{align-items:flex-start}.tag{font-size:9px}.hud{gap:12px;font-size:12px}.help{display:block}.help>span{display:block;margin-bottom:8px}.mobile{display:flex}.card{padding:10px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="top"><h1>◼ DINO RUN</h1><span class="tag">JOGO OFFLINE · v1</span></header>
+  <section class="card" aria-label="Jogo do dinossauro">
+    <div class="hud"><div><span>PONTOS</span><b id="score">00000</b></div><div><span>RECORDE</span><b id="best">00000</b></div></div>
+    <div class="stage">
+      <canvas id="game" width="800" height="270" tabindex="0" aria-label="Jogo do dinossauro. Toque ou pressione espaço para pular."></canvas>
+      <div class="overlay" id="overlay">
+        <div><h2 id="headline">DINO RUN</h2><p id="message">Pule os cactos e tente bater seu recorde.<br>Espaço, ↑ ou toque para começar.</p><button id="start">JOGAR</button></div>
+      </div>
+    </div>
+    <div class="help"><span>CONTROLES: ESPAÇO / ↑ / TOQUE = PULAR · ↓ = ABAIXAR</span><span>Desvie dos obstáculos!</span></div>
+    <div class="mobile"><button id="jump">PULAR ↑</button><button id="duck">ABAIXAR ↓</button></div>
+  </section>
+  <footer>Feito para jogar direto no navegador · sem downloads ou internet durante a partida</footer>
+</main>
+<script>
+(()=>{
+'use strict';
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const $=id=>document.getElementById(id);
+const scoreEl=$('score'),bestEl=$('best'),overlay=$('overlay');
+const W=800,H=270,ground=218;
+let state='ready',score=0,best=0,speed=6,frame=0,spawnIn=70,obstacles=[],clouds=[],dust=[];
+let dino={x:78,y:ground-44,w:36,h:44,vy:0,grounded:true,duck:false,run:0};
+try{best=Number(localStorage.getItem('dino-run-best')||0)}catch(_){}
+bestEl.textContent=fmt(best);
+for(let i=0;i<5;i++)clouds.push({x:Math.random()*W,y:28+Math.random()*82,s:0.6+Math.random()*0.8});
+function fmt(n){return String(Math.floor(n)).padStart(5,'0')}
+function reset(){score=0;speed=6;frame=0;spawnIn=65;obstacles=[];dust=[];dino.y=ground-dino.h;dino.vy=0;dino.grounded=true;dino.duck=false;dino.run=0;scoreEl.textContent=fmt(0)}
+function start(){reset();state='playing';overlay.hidden=true;canvas.focus()}
+function end(){state='over';overlay.hidden=false;$('headline').textContent='FIM DE JOGO';$('message').innerHTML='Pontuação: <b>'+fmt(score)+'</b><br>Mais uma tentativa?';$('start').textContent='JOGAR DE NOVO';if(score>best){best=score;bestEl.textContent=fmt(best);try{localStorage.setItem('dino-run-best',best)}catch(_){}}}
+function jump(){if(state!=='playing'){start();return}if(dino.grounded){dino.vy=-12.8;dino.grounded=false;for(let i=0;i<5;i++)dust.push({x:dino.x+10,y:ground-2,vx:-Math.random()*2,vy:-Math.random()*2,life:18})}}
+function setDuck(on){dino.duck=!!on&&dino.grounded}
+$('start').addEventListener('click',start);$('jump').addEventListener('click',jump);
+$('duck').addEventListener('pointerdown',e=>{e.preventDefault();setDuck(true)});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>$('duck').addEventListener(ev,()=>setDuck(false)));
+canvas.addEventListener('pointerdown',()=>{if(state!=='playing')start();else jump()});
+window.addEventListener('keydown',e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();if(!e.repeat)jump()}if(['ArrowDown','KeyS'].includes(e.code)){e.preventDefault();setDuck(true)}if(e.code==='Enter'&&state!=='playing')start()});
+window.addEventListener('keyup',e=>{if(['ArrowDown','KeyS'].includes(e.code))setDuck(false)});
+function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),w,h)}
+function drawDino(){
+ const x=dino.x,y=dino.y,w=dino.duck?48:36,h=dino.duck?27:44;
+ const top=dino.duck?ground-h:y;
+ const c='#535353';dino.w=w;dino.h=h;
+ // Original pixel-style dinosaur assembled from simple shapes
+ rect(x+5,top+13,18,20,c);rect(x+15,top+2,17,19,c);rect(x+25,top+7,15,10,c);
+ rect(x+18,top,5,5,c);rect(x+30,top+10,3,3,'#fff');rect(x+31,top+11,1,1,c);
+ rect(x,top+20,9,5,c);rect(x+8,top+27,8,4,c);
+ if(!dino.grounded){rect(x+8,top+32,6,10,c);rect(x+23,top+32,6,8,c)}
+ else if(Math.floor(dino.run/7)%2===0){rect(x+8,top+31,6,12,c);rect(x+23,top+31,6,7,c)}
+ else{rect(x+8,top+31,6,7,c);rect(x+23,top+31,6,12,c)}
+}
+function spawn(){
+ const bird=score>220&&Math.random()<.25;
+ const size=bird?{w:36,h:24}:{w:18+Math.random()*15,h:28+Math.random()*24};
+ obstacles.push({x:W+10,y:bird?ground-68-Math.random()*35:ground-size.h,w:size.w,h:size.h,bird,variant:Math.random()});
+ spawnIn=Math.max(39,Math.random()*38+62-speed*2);
+}
+function drawObstacle(o){
+ if(o.bird){let flap=Math.sin(frame*.28)*5;rect(o.x+5,o.y+8,25,9,'#555');rect(o.x+24,o.y+3,10,8,'#555');rect(o.x+31,o.y+5,4,3,'#555');rect(o.x+10,o.y+6+flap,14,4,'#555');rect(o.x+15,o.y+17,4,5,'#555');return}
+ const c='#5b9b49';rect(o.x+o.w*.35,o.y+4,o.w*.38,o.h-4,c);rect(o.x,o.y+o.h*.38,o.w*.43,7,c);rect(o.x,o.y+o.h*.25,6,o.h*.25,c);rect(o.x+o.w*.58,o.y+o.h*.55,o.w*.42,7,c);rect(o.x+o.w*.77,o.y+o.h*.4,6,o.h*.2,c);
+}
+function collide(o){
+ const dx=dino.x+(dino.duck?4:5),dy=dino.y+(dino.duck?5:5),dw=dino.w-(dino.duck?8:10),dh=dino.h-9;
+ const ox=o.x+4,oy=o.y+3,ow=o.w-8,oh=o.h-5;
+ return dx<ox+ow&&dx+dw>ox&&dy<oy+oh&&dy+dh>oy;
+}
+function update(){
+ if(state!=='playing')return;
+ frame++;score+=.12;speed=Math.min(12.5,6+score/180);scoreEl.textContent=fmt(score);
+ dino.run++;if(!dino.grounded){dino.vy+=.62;dino.y+=dino.vy;if(dino.y>=ground-dino.h){dino.y=ground-dino.h;dino.vy=0;dino.grounded=true}}
+ spawnIn--;if(spawnIn<=0)spawn();
+ for(const o of obstacles){o.x-=speed;if(collide(o)){end();break}}
+ obstacles=obstacles.filter(o=>o.x+o.w>-10);
+ for(const c of clouds){c.x-=c.s;if(c.x<-90){c.x=W+20;c.y=25+Math.random()*80}}
+ for(const p of dust){p.x+=p.vx;p.y+=p.vy;p.life--}dust=dust.filter(p=>p.life>0);
+}
+function render(){
+ ctx.clearRect(0,0,W,H);rect(0,0,W,H,'#fff');
+ // faint sky marks
+ ctx.strokeStyle='#f0f0f0';ctx.lineWidth=1;
+ for(let i=0;i<4;i++){let x=(i*223-frame*.25)%(W+60);ctx.beginPath();ctx.moveTo(x,35+i*22);ctx.lineTo(x+30,35+i*22);ctx.stroke()}
+ for(const c of clouds){ctx.fillStyle='#e7e7e7';ctx.beginPath();ctx.ellipse(c.x,c.y,21*c.s,5*c.s,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(c.x+9*c.s,c.y-4*c.s,10*c.s,6*c.s,0,0,Math.PI*2);ctx.fill()}
+ rect(0,ground,W,2,'#777');
+ for(let i=0;i<18;i++){let x=(i*53-frame*speed)%(W+40);if(x<0)x+=W+40;rect(x,ground+12+(i%3)*7,14,1,'#dedede')}
+ for(const o of obstacles)drawObstacle(o);
+ for(const p of dust)rect(p.x,p.y,3,3,'#aaa');
+ drawDino();
+ if(state==='ready'||state==='over'){ctx.fillStyle='#888';ctx.font='12px monospace';ctx.textAlign='center';ctx.fillText('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',W/2,ground+35)}
+}
+function loop(){update();render();requestAnimationFrame(loop)}
+loop();
+})();
+</script>
+</body>
+</html>
