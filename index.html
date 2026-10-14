@@ -95,7 +95,7 @@ function drawObstacle(o){
  const c='#5b9b49';rect(o.x+o.w*.35,o.y+4,o.w*.38,o.h-4,c);rect(o.x,o.y+o.h*.38,o.w*.43,7,c);rect(o.x,o.y+o.h*.25,6,o.h*.25,c);rect(o.x+o.w*.58,o.y+o.h*.55,o.w*.42,7,c);rect(o.x+o.w*.77,o.y+o.h*.4,6,o.h*.2,c);
 }
 function collide(o){
- const dx=dino.x+(dino.duck?4:5),dy=dino.y+(dino.duck?5:5),dw=dino.w-(dino.duck?8:10),dh=dino.h-9;
+ const dx=dino.x+(dino.duck?4:5),dy=(dino.duck?ground-dino.h:dino.y)+5,dw=dino.w-(dino.duck?8:10),dh=dino.h-9;
  const ox=o.x+4,oy=o.y+3,ow=o.w-8,oh=o.h-5;
  return dx<ox+ow&&dx+dw>ox&&dy<oy+oh&&dy+dh>oy;
 }
