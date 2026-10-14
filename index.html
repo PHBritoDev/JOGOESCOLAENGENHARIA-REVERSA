@@ -58,14 +58,14 @@ const skins=[
 let state='ready',score=0,best=0,coins=0,bank=0,speed=6,frame=0,runFrames=0,spawnIn=65,obstacles=[],clouds=[],dust=[],stars=[],rain=[],eventIndex=0,eventTimer=0,worldTime=0,shopFrom='ready';
 let currentSkin='classic',owned=['classic'],dino={x:78,y:ground-46,w:38,h:46,vy:0,grounded:true,duck:false,run:0};
 const events=[
-{name:'☀️ DIA ENSOLARADO',kind:'day',duration:1700},
-{name:'🌧️ CHUVA FORTE',kind:'rain',duration:1400},
-{name:'🌙 NOITE ESTRELADA',kind:'night',duration:1500},
-{name:'🌠 CHUVA DE ESTRELAS',kind:'meteor',duration:1300},
-{name:'🌫️ NEBLINA MISTERIOSA',kind:'fog',duration:1250},
-{name:'🌋 VALE DOS VULCÕES',kind:'volcano',duration:1450},
-{name:'🔥 INFERNO ARDENTE',kind:'hell',duration:1400},
-{name:'🪐 VIAGEM PELO ESPAÇO',kind:'space',duration:1550}
+{name:'☀️ DIA ENSOLARADO',kind:'day',duration:600},
+{name:'🌧️ CHUVA FORTE',kind:'rain',duration:600},
+{name:'🌙 NOITE ESTRELADA',kind:'night',duration:600},
+{name:'🌠 CHUVA DE ESTRELAS',kind:'meteor',duration:600},
+{name:'🌫️ NEBLINA MISTERIOSA',kind:'fog',duration:600},
+{name:'🌋 VALE DOS VULCÕES',kind:'volcano',duration:600},
+{name:'🔥 INFERNO ARDENTE',kind:'hell',duration:600},
+{name:'🪐 VIAGEM PELO ESPAÇO',kind:'space',duration:600}
 ];
 try{best=Number(localStorage.getItem('dino2-best')||0);coins=Number(localStorage.getItem('dino2-coins')||0);currentSkin=localStorage.getItem('dino2-skin')||'classic';owned=JSON.parse(localStorage.getItem('dino2-owned')||'["classic"]');if(!owned.includes('classic'))owned.unshift('classic');if(!skins.some(s=>s.id===currentSkin)||!owned.includes(currentSkin))currentSkin='classic'}catch(_){}
 $('best').textContent=fmt(best);$('coins').textContent=coins;
@@ -128,7 +128,7 @@ function update(){
  frame++;runFrames++;worldTime++;score+=.12;speed=Math.min(13,6+score/170);$('score').textContent=fmt(score);
  if(runFrames%180===0){bank+=1;$('coins').textContent=coins+Math.floor(bank)}
  if(runFrames%280===0){bank+=2;$('coins').textContent=coins+Math.floor(bank)}
- eventTimer++;if(eventTimer>events[eventIndex].duration){setEvent(eventIndex+1)}
+ eventTimer++;if(eventTimer>=events[eventIndex].duration){setEvent(eventIndex+1)}
  dino.run++;if(!dino.grounded){dino.vy+=.62;dino.y+=dino.vy;if(dino.y>=ground-dino.h){dino.y=ground-dino.h;dino.vy=0;dino.grounded=true}}
  spawnIn--;if(spawnIn<=0)spawn();
  for(const o of obstacles){o.x-=speed;if(collide(o)){end();break}}obstacles=obstacles.filter(o=>o.x+o.w>-10);
