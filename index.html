@@ -1,2 +1,50 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jogo — Engenharia Reversa</title><link rel="stylesheet" href="css/style.css"></head><body><header><h1>JOGO — ENGENHARIA REVERSA <small>Versão 0.1</small></h1></header><main><section><div class="bar"><b>ARENA DO BOSQUE</b><strong id="clock">03:00</strong><span id="status">BATALHA EM ANDAMENTO</span></div><canvas id="arena"></canvas><p>Selecione uma carta e toque no seu lado da arena para posicionar a tropa.</p></section><aside><h2>Destrua a torre principal</h2><p>Defenda suas torres e derrote a equipe adversária.</p><div class="stats">Suas torres: <b id="myTowers">3</b> · Torres inimigas: <b id="foeTowers">3</b></div><h3>Elixir <span id="elixirText">5 / 10</span></h3><div class="meter"><div id="elixirBar"></div></div><h3>Sua mão</h3><div id="cards" class="cards"></div><p id="cardInfo">Selecione uma carta.</p><button id="restart">Reiniciar batalha</button></aside></main><script type="module" src="js/game.js"></script></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#172c46">
+<title>Reinos da Arena — Batalha local</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="game-shell">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">⚔</div><div><strong>REINOS DA ARENA</strong><small>EDIÇÃO LOCAL • VERSÃO 2.0</small></div></div>
+    <div class="resources"><div class="resource gold"><span>🪙</span><b id="gold">999999</b><button data-toast="Ouro ilimitado nesta versão local">＋</button></div><div class="resource gems"><span>💎</span><b id="gems">999999</b><button data-toast="Gemas ilimitadas nesta versão local">＋</button></div><button class="profile" data-page="profile">👑 <span>Rei Local</span><small>NÍVEL 11</small></button></div>
+  </header>
+  <main>
+    <section id="page-battle" class="page active">
+      <div class="home-layout">
+        <aside class="side-panel player-panel">
+          <div class="avatar">👑</div><h2>Rei Local</h2><p class="muted">Arena de Treinamento</p>
+          <div class="trophy-number">🏆 <b id="trophies">0</b></div><div class="xp"><span style="width:72%"></span></div><small>NÍVEL DO REI 11</small>
+          <div class="mini-stats"><div><b id="wins">0</b><small>VITÓRIAS</small></div><div><b id="losses">0</b><small>DERROTAS</small></div></div>
+          <button class="secondary full" data-page="collection">🃏 Minha coleção</button>
+          <button class="secondary full" data-page="emotes">😎 Emotes</button>
+        </aside>
+        <div class="battle-feature">
+          <div class="season-ribbon"><span>⚡ TEMPORADA DE TREINO</span><b>ARENA 1 · VALE DOS REIS</b></div>
+          <div class="arena-preview"><div class="preview-sky"><span>♜</span><span>⚔️</span><span>♜</span></div><div class="river"></div><div class="bridge bridge-a"></div><div class="bridge bridge-b"></div><div class="preview-bottom">BATALHA DE TORRES <small>1 × 1 • CONTRA BOT</small></div></div>
+          <div class="battle-controls"><div><strong>Partida amistosa</strong><small>Deck nível 11 · Sem internet</small></div><button class="play-button" id="playButton">▶ JOGAR</button></div>
+          <div class="mode-strip"><button class="mode selected" data-mode="classic">🏰 Batalha clássica</button><button class="mode" data-mode="sudden">⚡ Morte súbita</button><button class="mode" data-mode="training">🎯 Treinamento</button></div>
+        </div>
+        <aside class="side-panel season-panel"><div class="panel-heading"><span>🎟️</span><div><h3>Passe da Arena</h3><small>TRILHA DE RECOMPENSAS</small></div></div><div class="pass-art">👑<span>✦</span><b>PASSE<br>DA ARENA</b></div><div class="pass-progress"><div><span>Progresso da temporada</span><b>3/30</b></div><div class="progress-track"><i style="width:10%"></i></div></div><button class="secondary full" data-page="pass">Ver recompensas →</button><div class="daily"><b>🎁 Recompensa diária</b><p>Recompensas simuladas e salvamento local.</p><button class="claim" id="claimDaily">RESGATAR</button></div></aside>
+      </div>
+      <div class="bottom-shortcuts"><button data-page="shop">🛒 <span>Loja</span><i>OFERTAS</i></button><button data-page="collection">🃏 <span>Cartas</span><i>TODAS NÍVEL 11</i></button><button data-page="pass">🎟️ <span>Passe</span><i>RECOMPENSAS</i></button><button data-page="emotes">😜 <span>Emotes</span><i>COLEÇÃO</i></button></div>
+    </section>
+    <section id="page-arena" class="page">
+      <div class="match-top"><button class="back-button" id="leaveBattle">← SAIR</button><div><b id="matchMode">BATALHA CLÁSSICA</b><small>ARENA LOCAL · CONTRA BOT</small></div><div class="match-timer" id="timer">3:00</div></div>
+      <div class="battle-board-wrap"><canvas id="arena" aria-label="Arena de batalha"></canvas><div class="battle-toast" id="battleToast">Escolha uma carta e toque no seu lado da arena!</div><div class="battle-end hidden" id="battleEnd"><div class="end-icon" id="endIcon">👑</div><h2 id="endTitle">VITÓRIA!</h2><p id="endText">A torre inimiga foi destruída.</p><button class="play-button" id="againButton">JOGAR NOVAMENTE</button><button class="secondary" id="homeButton">VOLTAR AO MENU</button></div></div>
+      <div class="battle-bottom"><div class="elixir-head"><span>ELIXIR</span><b id="elixirLabel">5/10</b></div><div class="elixir-track"><i id="elixirFill" style="width:50%"></i></div><div class="hand" id="hand"></div><div class="battle-hint">Selecione uma carta e toque no seu território para posicioná-la. Tecla 1–4 também seleciona cartas.</div><div class="battle-actions"><button id="emoteBattle">😆 EMOTE</button><button id="muteEmotes">🔊</button></div></div>
+    </section>
+    <section id="page-collection" class="page content-page"><div class="page-heading"><div><small>SEU ARSENAL</small><h1>🃏 Coleção de cartas</h1><p>Todas as cartas desta versão estão no nível 11.</p></div><div class="heading-badge">NÍVEL 11 EM TODAS</div></div><div class="collection-tools"><input id="cardSearch" placeholder="Buscar carta..." aria-label="Buscar carta"><select id="rarityFilter"><option value="all">Todas as raridades</option><option>Comum</option><option>Rara</option><option>Épica</option><option>Lendária</option><option>Campeã</option></select><button class="secondary" id="resetDeck">Restaurar deck</button></div><div class="deck-editor"><div><b>DECK DE BATALHA <span id="deckCount">8/8</span></b><small>Toque numa carta abaixo para adicionar/remover do deck.</small></div><div id="deckSlots" class="deck-slots"></div><div class="avg-cost">Custo médio de elixir <b id="avgCost">3.5</b></div></div><div id="collectionGrid" class="collection-grid"></div></section>
+    <section id="page-shop" class="page content-page"><div class="page-heading"><div><small>OFERTAS LOCAIS</small><h1>🛒 Loja</h1><p>Compras simuladas; nada usa dinheiro real.</p></div><div class="heading-badge">999.999 💎</div></div><div class="shop-tabs"><button class="selected">OFERTAS DO DIA</button><button data-toast="A aba de baús está simulada nesta edição">BAÚS</button><button data-toast="A aba de visuais está simulada nesta edição">VISUAIS</button></div><div class="shop-grid" id="shopGrid"></div><div class="notice">ℹ️ Esta loja é offline. Os itens e preços são apenas para o protótipo local.</div></section>
+    <section id="page-pass" class="page content-page"><div class="page-heading"><div><small>TEMPORADA LOCAL</small><h1>🎟️ Passe da Arena</h1><p>Jogue partidas para simular o avanço na trilha de recompensas.</p></div><div class="heading-badge">PATAMAR 3 / 30</div></div><div class="pass-hero"><div><small>TEMPORADA 01</small><h2>Ascensão dos Reis</h2><p>Ganhe coroas nas batalhas e resgate recompensas gratuitas.</p><button class="play-button" data-page="battle">JOGAR AGORA</button></div><div class="hero-crown">👑</div></div><div class="pass-track" id="passTrack"></div><div class="notice">Passe premium, compras e recompensas oficiais são representados apenas por sistemas fictícios locais.</div></section>
+    <section id="page-emotes" class="page content-page"><div class="page-heading"><div><small>EXPRESSÕES</small><h1>😜 Coleção de emotes</h1><p>Escolha um emote para equipar ou use-o durante a batalha.</p></div><div class="heading-badge">8 ESPAÇOS</div></div><div class="equipped-box"><b>DECK DE EMOTES</b><div id="equippedEmotes" class="equipped-emotes"></div></div><div id="emoteGrid" class="emote-grid"></div></section>
+    <section id="page-profile" class="page content-page"><div class="page-heading"><div><small>IDENTIDADE LOCAL</small><h1>👑 Perfil do jogador</h1><p>Seus dados são salvos apenas neste navegador.</p></div></div><div class="profile-card"><div class="avatar big">👑</div><div><h2>Rei Local</h2><p>Jogador offline · Nível 11</p><div class="trophy-number">🏆 <b id="profileTrophies">0</b></div></div></div><div class="profile-stats"><div><small>VITÓRIAS</small><b id="profileWins">0</b></div><div><small>DERROTAS</small><b id="profileLosses">0</b></div><div><small>OURO</small><b>999.999</b></div><div><small>GEMAS</small><b>999.999</b></div></div><button class="secondary" id="resetProgress">Reiniciar estatísticas locais</button></section>
+  </main>
+  <nav class="bottom-nav"><button class="nav-item active" data-page="battle"><span>🏰</span><b>Batalha</b></button><button class="nav-item" data-page="collection"><span>🃏</span><b>Cartas</b></button><button class="nav-item" data-page="shop"><span>🛒</span><b>Loja</b></button><button class="nav-item" data-page="pass"><span>🎟️</span><b>Passe</b></button><button class="nav-item" data-page="emotes"><span>😜</span><b>Emotes</b></button></nav>
+  <div id="toast" class="toast" role="status"></div>
+</div>
+<script src="js/game.js"></script>
+</body></html>
