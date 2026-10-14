@@ -13,7 +13,7 @@ body{display:grid;place-items:center;padding:16px}main{width:min(1000px,100%)}
 .card{background:linear-gradient(145deg,#1b2945ee,#111a2fee);border:1px solid #3a4969;border-radius:18px;padding:clamp(12px,2.6vw,22px);box-shadow:0 18px 60px #0005}
 .hud{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 2px 12px;flex-wrap:wrap}.stats{display:flex;gap:clamp(12px,3vw,26px)}.stat{font-size:15px;font-weight:900}.stat span{display:block;color:#8ea0c0;font-size:9px;letter-spacing:1.3px;margin-bottom:4px}.stat b{font-variant-numeric:tabular-nums}.coins{color:var(--gold)}.event-pill{font-size:11px;font-weight:900;padding:8px 11px;border-radius:99px;background:#263958;border:1px solid #536b91;color:#d7e6ff}
 .stage{position:relative;overflow:hidden;border:1px solid #425475;border-radius:13px;background:#9ac7d5;touch-action:manipulation}canvas{display:block;width:100%;height:auto;aspect-ratio:800/300;outline:none}
-.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#091127c9;backdrop-filter:blur(5px);padding:18px}.overlay[hidden]{display:none}.modal-content{width:min(470px,100%)}.overlay h2{font-size:clamp(24px,5vw,39px);letter-spacing:-1.8px;margin:0 0 8px}.overlay p{font-size:12px;color:#c0cce2;margin:0 0 17px;line-height:1.7}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#091127c9;backdrop-filter:blur(5px);padding:18px}.overlay[hidden]{display:none}.modal-content{width:min(470px,100%)}.overlay h2{font-size:clamp(24px,5vw,39px);letter-spacing:-1.8px;margin:0 0 8px}.overlay p{font-size:12px;color:#c0cce2;margin:0 0 12px;line-height:1.7}.world-label{display:block;text-align:left;color:#8ef2bb;font-size:10px;font-weight:900;letter-spacing:1px;margin:12px 0 7px}#worldSelect{width:100%;font:inherit;font-size:12px;font-weight:800;color:#f3f7ff;background:#182541;border:1px solid #5b7094;border-radius:11px;padding:12px;margin-bottom:15px;outline:none}#worldSelect:focus{border-color:#8ef2bb;box-shadow:0 0 0 3px #8ef2bb22}.assistant-link{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:11px 13px;border:1px solid #405071;border-radius:12px;background:#101a2eaa;color:#a9b8d3;font-size:11px}.assistant-link a{color:#8ef2bb;font-weight:900;text-decoration:none}.assistant-link a:hover{text-decoration:underline}
 button{font:inherit;font-weight:900;border:1px solid #617493;border-radius:11px;padding:11px 15px;background:linear-gradient(180deg,#344867,#243451);color:#f3f7ff;cursor:pointer;touch-action:manipulation;transition:transform .12s,border-color .12s,filter .12s}button:hover{filter:brightness(1.15);border-color:#8ba8d7}button:active{transform:translateY(1px)}button.primary{background:linear-gradient(180deg,#a1f6c9,#57dba0);color:#102a27;border:0;box-shadow:0 5px 20px #5be5a52c}button.gold{background:linear-gradient(180deg,#ffeaa0,#e5b844);color:#36270a;border:0}
 .actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.help{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:13px;color:#9eacc7;font-size:10px;line-height:1.6}.mobile{display:none;gap:10px;margin-top:12px}.mobile button{flex:1}.shop-trigger{display:flex;gap:8px;align-items:center}
 .shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left;margin:15px 0;max-height:44vh;overflow:auto;padding:2px}.skin-card{border:1px solid #3b4c6b;background:linear-gradient(145deg,#243553,#17233c);border-radius:13px;padding:10px;min-width:0}.skin-preview{height:62px;border-radius:9px;display:grid;place-items:center;font-size:35px;margin-bottom:8px;background:radial-gradient(ellipse,#ffffff18,transparent 70%)}.skin-card h3{font-size:12px;margin:0 0 5px}.skin-card p{font-size:10px;margin:0 0 9px;color:#a9b8d3;line-height:1.4}.skin-card button{width:100%;padding:9px 5px;font-size:10px}.close-row{display:flex;justify-content:flex-end}.small-note{font-size:10px;color:#9eacc7}
@@ -35,10 +35,10 @@ footer{text-align:center;color:#7484a4;font-size:10px;margin-top:14px}
 </div>
 <div class="stage">
  <canvas id="game" width="800" height="300" tabindex="0" aria-label="Dino Run. Espaço ou toque para pular."></canvas>
- <div class="overlay" id="overlay"><div class="modal-content"><h2 id="headline">SUA AVENTURA COMEÇA!</h2><p id="message">Corra, desvie e sobreviva aos eventos do clima.<br>Quanto mais tempo você ficar, mais o mundo muda!</p><div class="actions"><button class="primary" id="start">JOGAR AGORA</button><button id="menuShop">🎨 ESCOLHER DINO</button></div></div></div>
+ <div class="overlay" id="overlay"><div class="modal-content"><h2 id="headline">SUA AVENTURA COMEÇA!</h2><p id="message">Escolha seu mundo e corra! Você pode jogar na chuva, à noite, no inferno ou no espaço.</p><label class="world-label" for="worldSelect">🌎 ESCOLHA O MUNDO</label><select id="worldSelect" aria-label="Escolha o mundo"><option value="random">🎲 Surpresa — muda a cada 10 segundos</option><option value="0">☀️ Dia ensolarado</option><option value="1">🌧️ Chuva forte</option><option value="2">🌙 Noite estrelada</option><option value="3">🌠 Chuva de estrelas</option><option value="4">🌫️ Neblina misteriosa</option><option value="5">🌋 Vale dos vulcões</option><option value="6">🔥 Inferno ardente</option><option value="7">🪐 Viagem pelo espaço</option></select><div class="actions"><button class="primary" id="start">JOGAR AGORA</button><button id="menuShop">🎨 ESCOLHER DINO</button></div></div></div>
  <div class="overlay" id="shopOverlay" hidden><div class="modal-content"><div class="close-row"><button id="closeShop">✕ FECHAR</button></div><h2>🦖 DINO STYLE</h2><p>Desbloqueie visuais raros com as moedas das suas corridas. Sua skin fica salva!</p><div class="shop-grid" id="skinGrid"></div><div class="small-note">Moedas são ganhas enquanto você corre. As skins compradas ficam disponíveis depois.</div></div></div>
 </div>
-<div class="help"><span>⌨️ ESPAÇO / ↑ / TOQUE = PULAR · ↓ = ABAIXAR</span><span>🌦️ O clima muda com o tempo · ✦ Junte moedas para novas skins</span></div>
+<div class="help"><span>⌨️ ESPAÇO / ↑ / TOQUE = PULAR · ↓ = ABAIXAR</span><span>🌎 Escolha o mundo · ✦ Junte moedas para novas skins</span></div><div class="assistant-link"><span>🤖 Quer saber dicas e novidades do jogo?</span><a href="https://bony-incompatible-trial--VazioInfity.replit.app" target="_blank" rel="noopener noreferrer">Conversar com DinoGPT ↗</a></div>
 <div class="mobile"><button id="jump" class="primary">PULAR ↑</button><button id="duck">ABAIXAR ↓</button></div>
 </section>
 <footer>Uma corrida sem fim. Sobreviva ao clima, desbloqueie estilos e bata seu recorde.</footer>
@@ -56,7 +56,7 @@ const skins=[
 {id:'toxic',name:'Tóxico Neon',desc:'Verde radioativo e raro.',color:'#d0ff4f',accent:'#f5ffb4',price:220,emoji:'☢️'}
 ];
 let state='ready',score=0,best=0,coins=0,bank=0,speed=6,frame=0,runFrames=0,spawnIn=65,obstacles=[],clouds=[],dust=[],stars=[],rain=[],eventIndex=0,eventTimer=0,worldTime=0,shopFrom='ready';
-let currentSkin='classic',owned=['classic'],dino={x:78,y:ground-46,w:38,h:46,vy:0,grounded:true,duck:false,run:0};
+let currentSkin='classic',owned=['classic'],selectedWorld='random',dino={x:78,y:ground-46,w:38,h:46,vy:0,grounded:true,duck:false,run:0};
 const events=[
 {name:'☀️ DIA ENSOLARADO',kind:'day',duration:600},
 {name:'🌧️ CHUVA FORTE',kind:'rain',duration:600},
@@ -76,8 +76,8 @@ setEvent(0);
 for(let i=0;i<7;i++)clouds.push({x:Math.random()*W,y:25+Math.random()*115,s:.5+Math.random()*.9});
 for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*190,r:.5+Math.random()*1.5,tw:Math.random()*6});
 for(let i=0;i<70;i++)rain.push({x:Math.random()*W,y:Math.random()*H,len:8+Math.random()*15,v:4+Math.random()*6});
-function reset(){score=0;speed=6;frame=0;runFrames=0;spawnIn=58;obstacles=[];dust=[];bank=0;setEvent(0);worldTime=0;dino.y=ground-dino.h;dino.vy=0;dino.grounded=true;dino.duck=false;dino.run=0;$('score').textContent=fmt(0)}
-function start(){if(state==='playing')return;reset();state='playing';$('overlay').hidden=true;$('shopOverlay').hidden=true;canvas.focus()}
+function reset(){score=0;speed=6;frame=0;runFrames=0;spawnIn=58;obstacles=[];dust=[];bank=0;setEvent(selectedWorld==='random'?Math.floor(Math.random()*events.length):Number(selectedWorld));worldTime=0;dino.y=ground-dino.h;dino.vy=0;dino.grounded=true;dino.duck=false;dino.run=0;$('score').textContent=fmt(0)}
+function start(){if(state==='playing')return;selectedWorld=$('worldSelect').value;reset();state='playing';$('overlay').hidden=true;$('shopOverlay').hidden=true;canvas.focus()}
 function end(){state='over';$('overlay').hidden=false;$('headline').textContent='CORRIDA ENCERRADA';$('message').innerHTML='Você fez <b>'+fmt(score)+'</b> pontos e juntou ✦ '+Math.floor(bank)+' moedas nesta corrida!<br>Mais uma tentativa para bater o recorde?';$('start').textContent='CORRER DE NOVO';if(score>best){best=score;$('best').textContent=fmt(best)}coins+=Math.floor(bank);$('coins').textContent=coins;persist()}
 function jump(){if(state!=='playing'){if(state==='ready'||state==='over')start();return}if(dino.grounded){dino.vy=-13;dino.grounded=false;for(let i=0;i<7;i++)dust.push({x:dino.x+12,y:ground-3,vx:-Math.random()*2.5,vy:-Math.random()*2.5,life:20,color:skin().color})}}
 function setDuck(on){dino.duck=!!on&&dino.grounded}
@@ -128,7 +128,7 @@ function update(){
  frame++;runFrames++;worldTime++;score+=.12;speed=Math.min(13,6+score/170);$('score').textContent=fmt(score);
  if(runFrames%180===0){bank+=1;$('coins').textContent=coins+Math.floor(bank)}
  if(runFrames%280===0){bank+=2;$('coins').textContent=coins+Math.floor(bank)}
- eventTimer++;if(eventTimer>=events[eventIndex].duration){setEvent(eventIndex+1)}
+ if(selectedWorld==='random'){eventTimer++;if(eventTimer>=events[eventIndex].duration){setEvent(eventIndex+1)}}
  dino.run++;if(!dino.grounded){dino.vy+=.62;dino.y+=dino.vy;if(dino.y>=ground-dino.h){dino.y=ground-dino.h;dino.vy=0;dino.grounded=true}}
  spawnIn--;if(spawnIn<=0)spawn();
  for(const o of obstacles){o.x-=speed;if(collide(o)){end();break}}obstacles=obstacles.filter(o=>o.x+o.w>-10);
