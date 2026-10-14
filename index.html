@@ -2,129 +2,166 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#f7f7f7">
-<title>Dino Run — Joguinho do Dinossauro</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#10172b">
+<title>Dino Run — Aventura Infinita</title>
 <style>
-:root{color-scheme:light;--ink:#454545;--muted:#888;--line:#dedede;--paper:#fff}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#f6f6f6;color:var(--ink)}
-body{display:grid;place-items:center;padding:18px}
-main{width:min(920px,100%)}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 12px}
-h1{font-size:clamp(20px,4vw,30px);letter-spacing:-1.5px;margin:0}
-.tag{font-size:11px;color:#777;border:1px solid #ddd;border-radius:99px;padding:6px 9px;white-space:nowrap}
-.card{background:white;border:1px solid var(--line);border-radius:16px;padding:clamp(12px,3vw,22px);box-shadow:0 8px 30px #00000008}
-.hud{display:flex;justify-content:flex-end;gap:24px;font-weight:800;font-size:14px;margin:0 2px 12px}
-.hud span{color:#777;font-size:10px;letter-spacing:1px;margin-right:5px}
-.stage{position:relative;overflow:hidden;border:1px solid #eee;border-radius:10px;background:#fff;touch-action:manipulation}
-canvas{display:block;width:100%;height:auto;aspect-ratio:800/270;outline:none}
-.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#ffffffd9;padding:20px}
-.overlay[hidden]{display:none}
-.overlay h2{font-size:clamp(23px,5vw,36px);letter-spacing:-1.5px;margin:0 0 8px}
-.overlay p{font-size:13px;color:#666;margin:0 0 18px;line-height:1.6}
-button{font:inherit;font-weight:800;border:0;border-radius:10px;padding:12px 18px;background:#424242;color:white;cursor:pointer;touch-action:manipulation}
-button:active{transform:translateY(1px)}
-.help{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;color:#777;font-size:11px;line-height:1.6}
-.mobile{display:none;gap:10px}.mobile button{flex:1}
-footer{text-align:center;color:#aaa;font-size:10px;margin-top:14px}
-@media(max-width:560px){body{padding:10px}.top{align-items:flex-start}.tag{font-size:9px}.hud{gap:12px;font-size:12px}.help{display:block}.help>span{display:block;margin-bottom:8px}.mobile{display:flex}.card{padding:10px}}
+:root{color-scheme:dark;--ink:#edf4ff;--muted:#a7b4ca;--line:#34415d;--panel:#17223b;--gold:#ffd76a;--mint:#72f1b8}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:radial-gradient(ellipse at 50% -20%,#34456f 0,#121a30 58%,#0b1020 100%);color:var(--ink)}
+body{display:grid;place-items:center;padding:16px}main{width:min(1000px,100%)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}h1{font-size:clamp(22px,4vw,34px);letter-spacing:-1.5px;margin:0;font-weight:1000}.logo{color:#8ef2bb;text-shadow:0 0 22px #65e6ad55}.tag{font-size:10px;color:#b8c8e5;border:1px solid #405071;border-radius:99px;padding:7px 10px;white-space:nowrap;background:#ffffff08}
+.card{background:linear-gradient(145deg,#1b2945ee,#111a2fee);border:1px solid #3a4969;border-radius:18px;padding:clamp(12px,2.6vw,22px);box-shadow:0 18px 60px #0005}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 2px 12px;flex-wrap:wrap}.stats{display:flex;gap:clamp(12px,3vw,26px)}.stat{font-size:15px;font-weight:900}.stat span{display:block;color:#8ea0c0;font-size:9px;letter-spacing:1.3px;margin-bottom:4px}.stat b{font-variant-numeric:tabular-nums}.coins{color:var(--gold)}.event-pill{font-size:11px;font-weight:900;padding:8px 11px;border-radius:99px;background:#263958;border:1px solid #536b91;color:#d7e6ff}
+.stage{position:relative;overflow:hidden;border:1px solid #425475;border-radius:13px;background:#9ac7d5;touch-action:manipulation}canvas{display:block;width:100%;height:auto;aspect-ratio:800/300;outline:none}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#091127c9;backdrop-filter:blur(5px);padding:18px}.overlay[hidden]{display:none}.modal-content{width:min(470px,100%)}.overlay h2{font-size:clamp(24px,5vw,39px);letter-spacing:-1.8px;margin:0 0 8px}.overlay p{font-size:12px;color:#c0cce2;margin:0 0 17px;line-height:1.7}
+button{font:inherit;font-weight:900;border:1px solid #617493;border-radius:11px;padding:11px 15px;background:linear-gradient(180deg,#344867,#243451);color:#f3f7ff;cursor:pointer;touch-action:manipulation;transition:transform .12s,border-color .12s,filter .12s}button:hover{filter:brightness(1.15);border-color:#8ba8d7}button:active{transform:translateY(1px)}button.primary{background:linear-gradient(180deg,#a1f6c9,#57dba0);color:#102a27;border:0;box-shadow:0 5px 20px #5be5a52c}button.gold{background:linear-gradient(180deg,#ffeaa0,#e5b844);color:#36270a;border:0}
+.actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.help{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:13px;color:#9eacc7;font-size:10px;line-height:1.6}.mobile{display:none;gap:10px;margin-top:12px}.mobile button{flex:1}.shop-trigger{display:flex;gap:8px;align-items:center}
+.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left;margin:15px 0;max-height:44vh;overflow:auto;padding:2px}.skin-card{border:1px solid #3b4c6b;background:linear-gradient(145deg,#243553,#17233c);border-radius:13px;padding:10px;min-width:0}.skin-preview{height:62px;border-radius:9px;display:grid;place-items:center;font-size:35px;margin-bottom:8px;background:radial-gradient(ellipse,#ffffff18,transparent 70%)}.skin-card h3{font-size:12px;margin:0 0 5px}.skin-card p{font-size:10px;margin:0 0 9px;color:#a9b8d3;line-height:1.4}.skin-card button{width:100%;padding:9px 5px;font-size:10px}.close-row{display:flex;justify-content:flex-end}.small-note{font-size:10px;color:#9eacc7}
+footer{text-align:center;color:#7484a4;font-size:10px;margin-top:14px}
+@media(max-width:580px){body{padding:9px}.top{align-items:flex-start}.tag{font-size:9px}.card{padding:10px}.hud{align-items:flex-start}.event-pill{font-size:9px;padding:7px 8px}.stat{font-size:13px}.help{display:block}.help>span{display:block;margin-bottom:5px}.mobile{display:flex}.shop-grid{gap:7px}.skin-card{padding:8px}}
 </style>
 </head>
 <body>
 <main>
-  <header class="top"><h1>◼ DINO RUN</h1><span class="tag">JOGO OFFLINE · v1</span></header>
-  <section class="card" aria-label="Jogo do dinossauro">
-    <div class="hud"><div><span>PONTOS</span><b id="score">00000</b></div><div><span>RECORDE</span><b id="best">00000</b></div></div>
-    <div class="stage">
-      <canvas id="game" width="800" height="270" tabindex="0" aria-label="Jogo do dinossauro. Toque ou pressione espaço para pular."></canvas>
-      <div class="overlay" id="overlay">
-        <div><h2 id="headline">DINO RUN</h2><p id="message">Pule os cactos e tente bater seu recorde.<br>Espaço, ↑ ou toque para começar.</p><button id="start">JOGAR</button></div>
-      </div>
-    </div>
-    <div class="help"><span>CONTROLES: ESPAÇO / ↑ / TOQUE = PULAR · ↓ = ABAIXAR</span><span>Desvie dos obstáculos!</span></div>
-    <div class="mobile"><button id="jump">PULAR ↑</button><button id="duck">ABAIXAR ↓</button></div>
-  </section>
-  <footer>Feito para jogar direto no navegador · sem downloads ou internet durante a partida</footer>
+<header class="top"><h1><span class="logo">◆ DINO</span> RUN</h1><span class="tag">AVENTURA INFINITA · v2</span></header>
+<section class="card" aria-label="Dino Run">
+<div class="hud">
+ <div class="stats">
+  <div class="stat"><span>PONTOS</span><b id="score">00000</b></div>
+  <div class="stat"><span>RECORDE</span><b id="best">00000</b></div>
+  <div class="stat coins"><span>MOEDAS</span><b id="coins">0</b> ✦</div>
+ </div>
+ <div class="shop-trigger"><span class="event-pill" id="eventLabel">☀️ DIA ENSOLARADO</span><button id="openShop">🦖 LOJA</button></div>
+</div>
+<div class="stage">
+ <canvas id="game" width="800" height="300" tabindex="0" aria-label="Dino Run. Espaço ou toque para pular."></canvas>
+ <div class="overlay" id="overlay"><div class="modal-content"><h2 id="headline">SUA AVENTURA COMEÇA!</h2><p id="message">Corra, desvie e sobreviva aos eventos do clima.<br>Quanto mais tempo você ficar, mais o mundo muda!</p><div class="actions"><button class="primary" id="start">JOGAR AGORA</button><button id="menuShop">🎨 ESCOLHER DINO</button></div></div></div>
+ <div class="overlay" id="shopOverlay" hidden><div class="modal-content"><div class="close-row"><button id="closeShop">✕ FECHAR</button></div><h2>🦖 DINO STYLE</h2><p>Desbloqueie visuais raros com as moedas das suas corridas. Sua skin fica salva!</p><div class="shop-grid" id="skinGrid"></div><div class="small-note">Moedas são ganhas enquanto você corre. As skins compradas ficam disponíveis depois.</div></div></div>
+</div>
+<div class="help"><span>⌨️ ESPAÇO / ↑ / TOQUE = PULAR · ↓ = ABAIXAR</span><span>🌦️ O clima muda com o tempo · ✦ Junte moedas para novas skins</span></div>
+<div class="mobile"><button id="jump" class="primary">PULAR ↑</button><button id="duck">ABAIXAR ↓</button></div>
+</section>
+<footer>Uma corrida sem fim. Sobreviva ao clima, desbloqueie estilos e bata seu recorde.</footer>
 </main>
 <script>
-(()=>{
-'use strict';
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
-const $=id=>document.getElementById(id);
-const scoreEl=$('score'),bestEl=$('best'),overlay=$('overlay');
-const W=800,H=270,ground=218;
-let state='ready',score=0,best=0,speed=6,frame=0,spawnIn=70,obstacles=[],clouds=[],dust=[];
-let dino={x:78,y:ground-44,w:36,h:44,vy:0,grounded:true,duck:false,run:0};
-try{best=Number(localStorage.getItem('dino-run-best')||0)}catch(_){}
-bestEl.textContent=fmt(best);
-for(let i=0;i<5;i++)clouds.push({x:Math.random()*W,y:28+Math.random()*82,s:0.6+Math.random()*0.8});
+(()=>{'use strict';
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),$=id=>document.getElementById(id);
+const W=800,H=300,ground=238;
+const skins=[
+{id:'classic',name:'Clássico',desc:'O velocista original.',color:'#5bdb8b',accent:'#b8ffb0',price:0,emoji:'🦖'},
+{id:'ice',name:'Gelo Ártico',desc:'Brilho azul de outro mundo.',color:'#75e7ff',accent:'#e1fcff',price:35,emoji:'❄️'},
+{id:'gold',name:'Dino Dourado',desc:'Um visual digno de lenda.',color:'#ffc947',accent:'#fff1a6',price:70,emoji:'👑'},
+{id:'shadow',name:'Sombra Roxa',desc:'Mistério com energia cósmica.',color:'#ba85ff',accent:'#f0d5ff',price:110,emoji:'🌌'},
+{id:'lava',name:'Dragão de Lava',desc:'Calor, faíscas e atitude.',color:'#ff755e',accent:'#ffe28b',price:160,emoji:'🔥'},
+{id:'toxic',name:'Tóxico Neon',desc:'Verde radioativo e raro.',color:'#d0ff4f',accent:'#f5ffb4',price:220,emoji:'☢️'}
+];
+let state='ready',score=0,best=0,coins=0,bank=0,speed=6,frame=0,runFrames=0,spawnIn=65,obstacles=[],clouds=[],dust=[],stars=[],rain=[],eventIndex=0,eventTimer=0,worldTime=0,shopFrom='ready';
+let currentSkin='classic',owned=['classic'],dino={x:78,y:ground-46,w:38,h:46,vy:0,grounded:true,duck:false,run:0};
+const events=[
+{name:'☀️ DIA ENSOLARADO',kind:'day',duration:1700},
+{name:'🌧️ CHUVA FORTE',kind:'rain',duration:1400},
+{name:'🌙 NOITE ESTRELADA',kind:'night',duration:1500},
+{name:'🌠 CHUVA DE ESTRELAS',kind:'meteor',duration:1300},
+{name:'🌫️ NEBLINA MISTERIOSA',kind:'fog',duration:1250}
+];
+try{best=Number(localStorage.getItem('dino2-best')||0);coins=Number(localStorage.getItem('dino2-coins')||0);currentSkin=localStorage.getItem('dino2-skin')||'classic';owned=JSON.parse(localStorage.getItem('dino2-owned')||'["classic"]');if(!owned.includes('classic'))owned.unshift('classic');if(!skins.some(s=>s.id===currentSkin)||!owned.includes(currentSkin))currentSkin='classic'}catch(_){}
+$('best').textContent=fmt(best);$('coins').textContent=coins;
 function fmt(n){return String(Math.floor(n)).padStart(5,'0')}
-function reset(){score=0;speed=6;frame=0;spawnIn=65;obstacles=[];dust=[];dino.y=ground-dino.h;dino.vy=0;dino.grounded=true;dino.duck=false;dino.run=0;scoreEl.textContent=fmt(0)}
-function start(){reset();state='playing';overlay.hidden=true;canvas.focus()}
-function end(){state='over';overlay.hidden=false;$('headline').textContent='FIM DE JOGO';$('message').innerHTML='Pontuação: <b>'+fmt(score)+'</b><br>Mais uma tentativa?';$('start').textContent='JOGAR DE NOVO';if(score>best){best=score;bestEl.textContent=fmt(best);try{localStorage.setItem('dino-run-best',best)}catch(_){}}}
-function jump(){if(state!=='playing'){start();return}if(dino.grounded){dino.vy=-12.8;dino.grounded=false;for(let i=0;i<5;i++)dust.push({x:dino.x+10,y:ground-2,vx:-Math.random()*2,vy:-Math.random()*2,life:18})}}
+function persist(){try{localStorage.setItem('dino2-best',best);localStorage.setItem('dino2-coins',coins);localStorage.setItem('dino2-skin',currentSkin);localStorage.setItem('dino2-owned',JSON.stringify(owned))}catch(_){}}
+function setEvent(i){eventIndex=i%events.length;eventTimer=0;$('eventLabel').textContent=events[eventIndex].name}
+setEvent(0);
+for(let i=0;i<7;i++)clouds.push({x:Math.random()*W,y:25+Math.random()*115,s:.5+Math.random()*.9});
+for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*190,r:.5+Math.random()*1.5,tw:Math.random()*6});
+for(let i=0;i<70;i++)rain.push({x:Math.random()*W,y:Math.random()*H,len:8+Math.random()*15,v:4+Math.random()*6});
+function reset(){score=0;speed=6;frame=0;runFrames=0;spawnIn=58;obstacles=[];dust=[];bank=0;setEvent(0);worldTime=0;dino.y=ground-dino.h;dino.vy=0;dino.grounded=true;dino.duck=false;dino.run=0;$('score').textContent=fmt(0)}
+function start(){if(state==='playing')return;reset();state='playing';$('overlay').hidden=true;$('shopOverlay').hidden=true;canvas.focus()}
+function end(){state='over';$('overlay').hidden=false;$('headline').textContent='CORRIDA ENCERRADA';$('message').innerHTML='Você fez <b>'+fmt(score)+'</b> pontos e juntou ✦ '+Math.floor(bank)+' moedas nesta corrida!<br>Mais uma tentativa para bater o recorde?';$('start').textContent='CORRER DE NOVO';if(score>best){best=score;$('best').textContent=fmt(best)}coins+=Math.floor(bank);$('coins').textContent=coins;persist()}
+function jump(){if(state!=='playing'){if(state==='ready'||state==='over')start();return}if(dino.grounded){dino.vy=-13;dino.grounded=false;for(let i=0;i<7;i++)dust.push({x:dino.x+12,y:ground-3,vx:-Math.random()*2.5,vy:-Math.random()*2.5,life:20,color:skin().color})}}
 function setDuck(on){dino.duck=!!on&&dino.grounded}
 $('start').addEventListener('click',start);$('jump').addEventListener('click',jump);
 $('duck').addEventListener('pointerdown',e=>{e.preventDefault();setDuck(true)});
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>$('duck').addEventListener(ev,()=>setDuck(false)));
-canvas.addEventListener('pointerdown',()=>{if(state!=='playing')start();else jump()});
-window.addEventListener('keydown',e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();if(!e.repeat)jump()}if(['ArrowDown','KeyS'].includes(e.code)){e.preventDefault();setDuck(true)}if(e.code==='Enter'&&state!=='playing')start()});
+canvas.addEventListener('pointerdown',e=>{if(e.target===canvas)jump()});
+window.addEventListener('keydown',e=>{if(['Space','ArrowUp','KeyW'].includes(e.code)){e.preventDefault();if(!e.repeat)jump()}if(['ArrowDown','KeyS'].includes(e.code)){e.preventDefault();setDuck(true)}if(e.code==='Enter'&&state!=='playing')start();if(e.code==='Escape')closeShop()});
 window.addEventListener('keyup',e=>{if(['ArrowDown','KeyS'].includes(e.code))setDuck(false)});
-function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),w,h)}
-function drawDino(){
- const x=dino.x,y=dino.y,w=dino.duck?48:36,h=dino.duck?27:44;
- const top=dino.duck?ground-h:y;
- const c='#535353';dino.w=w;dino.h=h;
- // Original pixel-style dinosaur assembled from simple shapes
- rect(x+5,top+13,18,20,c);rect(x+15,top+2,17,19,c);rect(x+25,top+7,15,10,c);
- rect(x+18,top,5,5,c);rect(x+30,top+10,3,3,'#fff');rect(x+31,top+11,1,1,c);
- rect(x,top+20,9,5,c);rect(x+8,top+27,8,4,c);
- if(!dino.grounded){rect(x+8,top+32,6,10,c);rect(x+23,top+32,6,8,c)}
- else if(Math.floor(dino.run/7)%2===0){rect(x+8,top+31,6,12,c);rect(x+23,top+31,6,7,c)}
- else{rect(x+8,top+31,6,7,c);rect(x+23,top+31,6,12,c)}
+function skin(){return skins.find(s=>s.id===currentSkin)||skins[0]}
+function openShop(){shopFrom=state;$('shopOverlay').hidden=false;renderShop()}
+function closeShop(){$('shopOverlay').hidden=true;if(state==='playing')canvas.focus()}
+$('openShop').addEventListener('click',openShop);$('menuShop').addEventListener('click',openShop);$('closeShop').addEventListener('click',closeShop);
+function renderShop(){
+ const grid=$('skinGrid');grid.innerHTML='';
+ skins.forEach(s=>{
+  const ownedSkin=owned.includes(s.id),active=currentSkin===s.id;
+  const card=document.createElement('div');card.className='skin-card';
+  const preview=document.createElement('div');preview.className='skin-preview';preview.style.color=s.color;preview.style.textShadow='0 0 20px '+s.color;preview.textContent='🦖';
+  const title=document.createElement('h3');title.textContent=s.name+(active?' ✓':'');
+  const desc=document.createElement('p');desc.textContent=s.desc;
+  const btn=document.createElement('button');btn.textContent=active?'EQUIPADA':ownedSkin?'EQUIPAR':'✦ '+s.price;
+  if(active)btn.disabled=true;if(!ownedSkin&&coins<s.price)btn.style.opacity='.55';
+  btn.addEventListener('click',()=>{if(owned.includes(s.id)){currentSkin=s.id;persist();renderShop();return}if(coins<s.price){desc.textContent='Faltam '+(s.price-coins)+' moedas! Jogue mais uma corrida.';return}coins-=s.price;owned.push(s.id);currentSkin=s.id;$('coins').textContent=coins;persist();renderShop()});
+  card.append(preview,title,desc,btn);grid.appendChild(card);
+ });
 }
-function spawn(){
- const bird=score>220&&Math.random()<.25;
- const size=bird?{w:36,h:24}:{w:18+Math.random()*15,h:28+Math.random()*24};
- obstacles.push({x:W+10,y:bird?ground-68-Math.random()*35:ground-size.h,w:size.w,h:size.h,bird,variant:Math.random()});
- spawnIn=Math.max(39,Math.random()*38+62-speed*2);
+function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)))}
+function spawn(){const bird=score>180&&Math.random()<.27;const z=bird?{w:38,h:24}:{w:17+Math.random()*17,h:27+Math.random()*25};obstacles.push({x:W+12,y:bird?ground-72-Math.random()*38:ground-z.h,w:z.w,h:z.h,bird,variant:Math.random()});spawnIn=Math.max(39,Math.random()*35+61-speed*1.8)}
+function collide(o){const dx=dino.x+(dino.duck?4:5),dy=(dino.duck?ground-dino.h:dino.y)+6,dw=dino.w-(dino.duck?8:10),dh=dino.h-11;return dx<o.x+o.w-5&&dx+dw>o.x+4&&dy<o.y+o.h-3&&dy+dh>o.y+3}
+function drawDino(){
+ const s=skin(),x=dino.x,y=dino.y,w=dino.duck?48:38,h=dino.duck?28:46,top=dino.duck?ground-h:y;dino.w=w;dino.h=h;
+ ctx.save();ctx.shadowColor=s.color;ctx.shadowBlur=s.id==='classic'?0:12;
+ rect(x+5,top+14,19,22,s.color);rect(x+15,top+3,18,20,s.color);rect(x+26,top+8,15,10,s.color);rect(x+19,top,5,5,s.accent);rect(x+31,top+10,3,3,'#fff');rect(x+32,top+11,1,1,'#18243a');rect(x,top+21,10,5,s.color);rect(x+8,top+29,9,4,s.accent);
+ ctx.restore();
+ if(!dino.grounded){rect(x+8,top+34,6,11,s.color);rect(x+24,top+34,6,9,s.color)}
+ else if(Math.floor(dino.run/6)%2===0){rect(x+8,top+34,6,11,s.color);rect(x+24,top+34,6,7,s.color)}
+ else{rect(x+8,top+34,6,7,s.color);rect(x+24,top+34,6,11,s.color)}
+ if(s.id==='gold'){rect(x+18,top-4,12,4,'#ffeaa1');rect(x+20,top-7,3,3,'#ffeaa1');rect(x+26,top-7,3,3,'#ffeaa1')}
 }
 function drawObstacle(o){
- if(o.bird){let flap=Math.sin(frame*.28)*5;rect(o.x+5,o.y+8,25,9,'#555');rect(o.x+24,o.y+3,10,8,'#555');rect(o.x+31,o.y+5,4,3,'#555');rect(o.x+10,o.y+6+flap,14,4,'#555');rect(o.x+15,o.y+17,4,5,'#555');return}
- const c='#5b9b49';rect(o.x+o.w*.35,o.y+4,o.w*.38,o.h-4,c);rect(o.x,o.y+o.h*.38,o.w*.43,7,c);rect(o.x,o.y+o.h*.25,6,o.h*.25,c);rect(o.x+o.w*.58,o.y+o.h*.55,o.w*.42,7,c);rect(o.x+o.w*.77,o.y+o.h*.4,6,o.h*.2,c);
-}
-function collide(o){
- const dx=dino.x+(dino.duck?4:5),dy=(dino.duck?ground-dino.h:dino.y)+5,dw=dino.w-(dino.duck?8:10),dh=dino.h-9;
- const ox=o.x+4,oy=o.y+3,ow=o.w-8,oh=o.h-5;
- return dx<ox+ow&&dx+dw>ox&&dy<oy+oh&&dy+dh>oy;
+ if(o.bird){const flap=Math.sin(frame*.3)*6;rect(o.x+5,o.y+8,26,9,'#35445c');rect(o.x+26,o.y+3,10,8,'#35445c');rect(o.x+33,o.y+5,4,3,'#35445c');rect(o.x+10,o.y+7+flap,15,4,'#35445c');rect(o.x+15,o.y+17,4,5,'#35445c');return}
+ const c=eventIndex===1?'#537e56':'#65bb72';rect(o.x+o.w*.35,o.y+4,o.w*.38,o.h-4,c);rect(o.x,o.y+o.h*.38,o.w*.43,7,c);rect(o.x,o.y+o.h*.25,6,o.h*.25,c);rect(o.x+o.w*.58,o.y+o.h*.55,o.w*.42,7,c);rect(o.x+o.w*.77,o.y+o.h*.4,6,o.h*.2,c);
 }
 function update(){
- if(state!=='playing')return;
- frame++;score+=.12;speed=Math.min(12.5,6+score/180);scoreEl.textContent=fmt(score);
+ if(state!=='playing'||!$('shopOverlay').hidden)return;
+ frame++;runFrames++;worldTime++;score+=.12;speed=Math.min(13,6+score/170);$('score').textContent=fmt(score);
+ if(runFrames%180===0){bank+=1;$('coins').textContent=coins+Math.floor(bank)}
+ if(runFrames%280===0){bank+=2;$('coins').textContent=coins+Math.floor(bank)}
+ eventTimer++;if(eventTimer>events[eventIndex].duration){setEvent(eventIndex+1)}
  dino.run++;if(!dino.grounded){dino.vy+=.62;dino.y+=dino.vy;if(dino.y>=ground-dino.h){dino.y=ground-dino.h;dino.vy=0;dino.grounded=true}}
  spawnIn--;if(spawnIn<=0)spawn();
- for(const o of obstacles){o.x-=speed;if(collide(o)){end();break}}
- obstacles=obstacles.filter(o=>o.x+o.w>-10);
- for(const c of clouds){c.x-=c.s;if(c.x<-90){c.x=W+20;c.y=25+Math.random()*80}}
- for(const p of dust){p.x+=p.vx;p.y+=p.vy;p.life--}dust=dust.filter(p=>p.life>0);
+ for(const o of obstacles){o.x-=speed;if(collide(o)){end();break}}obstacles=obstacles.filter(o=>o.x+o.w>-10);
+ for(const c of clouds){c.x-=c.s;if(c.x<-100){c.x=W+20;c.y=20+Math.random()*120}}
+ const ev=events[eventIndex];if(ev.kind==='rain'||ev.kind==='fog'){rain.forEach(p=>{p.y+=p.v;p.x-=ev.kind==='rain'?2:0.5;if(p.y>H){p.y=-p.len;p.x=Math.random()*W}if(p.x<0)p.x=W})}
+ dust.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--;p.vy+=.08});dust=dust.filter(p=>p.life>0);
+}
+function drawSky(){
+ const kind=events[eventIndex].kind;
+ let top='#73c5e8',bottom='#e1f4ef';
+ if(kind==='night'){top='#111c43';bottom='#394b73'}if(kind==='meteor'){top='#17143d';bottom='#5b477e'}if(kind==='rain'){top='#394d6a';bottom='#8babb7'}if(kind==='fog'){top='#7d94a8';bottom='#c1d1d6'}
+ const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,top);g.addColorStop(1,bottom);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ if(kind==='night'||kind==='meteor'){
+  stars.forEach(s=>{const tw=.5+.5*Math.sin(frame*.04+s.tw);ctx.globalAlpha=.45+tw*.55;rect(s.x,s.y,s.r+0.5,s.r+0.5,kind==='meteor'?'#ffe4ff':'#fff8cb')});ctx.globalAlpha=1;
+  ctx.fillStyle=kind==='meteor'?'#e4d9ff':'#fff2c2';ctx.beginPath();ctx.arc(690,55,kind==='meteor'?17:22,0,Math.PI*2);ctx.fill();
+  if(kind==='meteor'){for(let i=0;i<3;i++){const mx=(W-((frame*3+i*275)%(W+120))),my=35+(i*41)%100;ctx.strokeStyle='#ffe7ff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(mx+24,my-10);ctx.stroke()}}
+ }else if(kind==='day'){ctx.fillStyle='#ffe7a1';ctx.beginPath();ctx.arc(690,55,22,0,Math.PI*2);ctx.fill()}
+ // distant hills move at a slower speed
+ ctx.fillStyle=kind==='night'?'#26385b':kind==='rain'?'#728f9d':'#9bc8b8';ctx.beginPath();ctx.moveTo(0,ground);for(let x=0;x<=W;x+=20)ctx.lineTo(x,ground-28-Math.sin(x*.018+frame*.002)*17-Math.sin(x*.04)*8);ctx.lineTo(W,ground);ctx.fill();
+ clouds.forEach(c=>{ctx.globalAlpha=kind==='night'?.16:.28;ctx.fillStyle=kind==='rain'?'#273b52':'#fff';ctx.beginPath();ctx.ellipse(c.x,c.y,24*c.s,7*c.s,0,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;
+ if(kind==='fog'){const fg=ctx.createLinearGradient(0,130,0,ground);fg.addColorStop(0,'#d9e8ed00');fg.addColorStop(1,'#e1edf0b8');ctx.fillStyle=fg;ctx.fillRect(0,100,W,ground-100)}
 }
 function render(){
- ctx.clearRect(0,0,W,H);rect(0,0,W,H,'#fff');
- // faint sky marks
- ctx.strokeStyle='#f0f0f0';ctx.lineWidth=1;
- for(let i=0;i<4;i++){let x=(i*223-frame*.25)%(W+60);ctx.beginPath();ctx.moveTo(x,35+i*22);ctx.lineTo(x+30,35+i*22);ctx.stroke()}
- for(const c of clouds){ctx.fillStyle='#e7e7e7';ctx.beginPath();ctx.ellipse(c.x,c.y,21*c.s,5*c.s,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(c.x+9*c.s,c.y-4*c.s,10*c.s,6*c.s,0,0,Math.PI*2);ctx.fill()}
- rect(0,ground,W,2,'#777');
- for(let i=0;i<18;i++){let x=(i*53-frame*speed)%(W+40);if(x<0)x+=W+40;rect(x,ground+12+(i%3)*7,14,1,'#dedede')}
- for(const o of obstacles)drawObstacle(o);
- for(const p of dust)rect(p.x,p.y,3,3,'#aaa');
+ drawSky();const kind=events[eventIndex].kind;
+ ctx.fillStyle=kind==='night'||kind==='meteor'?'#1c2942':kind==='rain'?'#5c7886':'#d7dfd1';ctx.fillRect(0,ground,W,H-ground);
+ ctx.fillStyle=kind==='night'||kind==='meteor'?'#94a5c4':'#526e63';ctx.fillRect(0,ground,W,3);
+ for(let i=0;i<26;i++){let x=(i*37-frame*speed)%(W+30);if(x<0)x+=W+30;rect(x,ground+12+(i%4)*9,12+(i%3)*5,2,kind==='night'?'#41516a':'#a5b7a4')}
+ obstacles.forEach(drawObstacle);dust.forEach(p=>rect(p.x,p.y,3,3,p.color||'#fff'));
  drawDino();
- if(state==='ready'||state==='over'){ctx.fillStyle='#888';ctx.font='12px monospace';ctx.textAlign='center';ctx.fillText('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',W/2,ground+35)}
+ if(kind==='rain'){ctx.strokeStyle='#c6eaff88';ctx.lineWidth=1.4;rain.forEach(p=>{ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-5,p.y+p.len);ctx.stroke()})}
+ if(kind==='fog'){ctx.fillStyle='#e4f0f488';ctx.fillRect(0,ground-60,W,55)}
+ if(kind==='meteor'&&frame%3===0){ctx.fillStyle='#ffeaff';ctx.beginPath();ctx.arc((frame*5)%W,45+Math.sin(frame*.03)*20,2,0,Math.PI*2);ctx.fill()}
+ if(state==='ready'||state==='over'){ctx.fillStyle='#ffffff80';ctx.fillRect(0,ground+30,W,1)}
 }
 function loop(){update();render();requestAnimationFrame(loop)}
 loop();
-})();
+})(); 
 </script>
 </body>
 </html>
