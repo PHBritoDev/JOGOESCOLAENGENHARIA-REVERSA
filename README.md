@@ -1,7 +1,22 @@
-# Projeto reiniciado do zero
+# Dino Run
 
-O projeto anterior foi removido da branch `main` para reconstrução completa.
+Joguinho de dinossauro inspirado no corredor clássico do navegador, feito em HTML, CSS e JavaScript puro.
 
-Backup do projeto anterior: [backup-antes-reinicio-2026-10-14](https://github.com/PHBritoDev/JOGOESCOLAENGENHARIA-REVERSA/tree/backup-antes-reinicio-2026-10-14).
+## Jogar na web
 
-A nova versão será construída aqui, começando por uma batalha local funcional.
+Quando o GitHub Pages terminar de publicar a branch `main`, jogue aqui:
+
+https://phbritodev.github.io/JOGOESCOLAENGENHARIA-REVERSA/
+
+## Controles
+
+- **Espaço / seta para cima / W:** pular.
+- **Seta para baixo / S:** abaixar.
+- **Toque na tela:** pular em celulares.
+- **Botões na tela:** controles de toque em dispositivos móveis.
+
+## Rodar localmente
+
+Abra `index.html` no navegador ou abra a pasta no VS Code e use uma extensão de servidor local, como Live Server.
+
+Sem dependências, imagens externas ou conexão durante a partida. O recorde é guardado no navegador usando localStorage.
