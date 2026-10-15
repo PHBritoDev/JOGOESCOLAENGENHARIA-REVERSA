@@ -1,22 +1,51 @@
-# Dino Run
+# Arena Reversa — Showdown local
 
-Joguinho de dinossauro inspirado no corredor clássico do navegador, feito em HTML, CSS e JavaScript puro.
+Um jogo independente de sobrevivência top-down, feito para navegador e sem servidor. O jogador escolhe um de três lutadores originais, enfrenta bots rivais, abre caixas de suprimento, coleta cubos de poder e tenta continuar dentro da zona segura.
 
-## Jogar na web
+## Executar
 
-Quando o GitHub Pages terminar de publicar a branch `main`, jogue aqui:
+O projeto não precisa de banco de dados, login, dependências externas ou serviço multiplayer.
 
-https://phbritodev.github.io/JOGOESCOLAENGENHARIA-REVERSA/
+```bash
+python3 -m http.server 8080
+```
+
+Abra `http://localhost:8080` no computador ou no celular conectado à mesma rede. O jogo também pode ser servido por qualquer hospedagem estática.
 
 ## Controles
 
-- **Espaço / seta para cima / W:** pular.
-- **Seta para baixo / S:** abaixar.
-- **Toque na tela:** pular em celulares.
-- **Botões na tela:** controles de toque em dispositivos móveis.
+- **Computador:** WASD ou setas para mover; mouse para mirar e segurar o botão esquerdo para disparar; espaço para usar o especial; Esc para pausar.
+- **Celular:** joystick esquerdo para mover; joystick direito para mirar e disparar; botão Super para a habilidade especial. A interface respeita as áreas seguras da tela.
 
-## Rodar localmente
+## Partida
 
-Abra `index.html` no navegador ou abra a pasta no VS Code e use uma extensão de servidor local, como Live Server.
+- **Showdown Solo:** oito adversários no modo Normal, caixas destrutíveis, cubos de poder derrubados por caixas e lutadores eliminados e zona de tempestade que fecha durante a partida.
+- **Treino:** quatro adversários, para praticar combate sem tempestade.
+- **Dificuldade:** Leve, Normal ou Intensa altera quantidade, vida, velocidade, recarga e precisão dos bots.
+- Os bots procuram caixas, disputam cubos, atacam qualquer rival, desviam de projéteis, usam o cenário e podem ativar suas habilidades.
+- Mira, Brasa e Volta têm padrões de tiro, atributos e especiais próprios.
+- Vitória, derrota, pausa, reinício, indicadores de vida, recarga, cubos, tempo e eliminações estão incluídos.
+- Estatísticas de partidas ficam somente no `localStorage` do navegador.
 
-Sem dependências, imagens externas ou conexão durante a partida. O recorde é guardado no navegador usando localStorage.
+## Arquivos
+
+- `index.html` — menu, seleção e HUD da partida.
+- `css/style.css` — identidade visual e adaptação desktop/mobile.
+- `js/engine.js` — movimento, colisão, combate, IA, caixas, cubos e tempestade.
+- `js/game.js` — controles, interface e desenho da arena.
+- `assets/characters.svg` — três sprites vetoriais originais.
+- `tests/engine.test.cjs` — testes do motor usando `node:test`.
+
+Todos os personagens, nomes, ilustrações e interface deste protótipo são originais. A inspiração é o gênero de arena de sobrevivência; não há arquivos de arte ou áudio extraídos de outro jogo.
+
+## Verificação local
+
+```bash
+node --check js/engine.js
+node --check js/game.js
+node --test tests/*.test.cjs
+```
+
+## Limites desta versão
+
+Esta é uma partida offline contra bots, não há multiplayer, contas nem persistência em nuvem. Os controles são desenhados na tela para toque e ponteiro; a validação precisa ser feita no dispositivo final antes de tratar a experiência como lançamento em produção.
