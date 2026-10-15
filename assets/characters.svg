@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" fill="none">
+  <defs>
+    <linearGradient id="sea-coat" x1="105" y1="156" x2="196" y2="267" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#77F0D7"/><stop offset=".48" stop-color="#269D91"/><stop offset="1" stop-color="#176C6A"/>
+    </linearGradient>
+    <linearGradient id="sun-leather" x1="380" y1="101" x2="478" y2="266" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD47C"/><stop offset=".46" stop-color="#D47943"/><stop offset="1" stop-color="#783D35"/>
+    </linearGradient>
+    <linearGradient id="violet-suit" x1="681" y1="110" x2="788" y2="273" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DDC0FF"/><stop offset=".45" stop-color="#9470DD"/><stop offset="1" stop-color="#584493"/>
+    </linearGradient>
+    <linearGradient id="gold-hair" x1="123" y1="42" x2="193" y2="131" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF1AB"/><stop offset=".65" stop-color="#E5A74F"/><stop offset="1" stop-color="#A85643"/>
+    </linearGradient>
+    <linearGradient id="ember-armor" x1="378" y1="76" x2="480" y2="176" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E97A4D"/><stop offset=".55" stop-color="#9D4F3B"/><stop offset="1" stop-color="#643C35"/>
+    </linearGradient>
+    <linearGradient id="lilac-hair" x1="677" y1="38" x2="783" y2="125" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4D8FF"/><stop offset=".52" stop-color="#B483EC"/><stop offset="1" stop-color="#7459B7"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-25%" y="-25%" width="150%" height="170%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+
+  <!-- Mira: fast courier with a wind-swept scarf and a hand-built signal pistol. -->
+  <g>
+    <ellipse cx="150" cy="273" rx="76" ry="15" fill="#102C30" opacity=".42" filter="url(#soft-shadow)"/>
+    <path d="M109 178c-28 11-42 35-40 69 1 10 10 14 18 7l38-34 4-42-20 0Z" fill="#D77B53" stroke="#392D35" stroke-width="8" stroke-linejoin="round"/>
+    <path d="m121 215-12 35c-4 12 2 19 14 19h23l8-47-33-7Z" fill="#284D51" stroke="#372E36" stroke-width="8" stroke-linejoin="round"/>
+    <path d="m156 217-1 38c0 10 7 14 18 14h20c9 0 13-8 9-16l-18-41-28 5Z" fill="#315B5C" stroke="#372E36" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M108 141c-11 18-14 40-7 67 4 16 17 25 37 27l38 0c22-5 33-21 31-46l-7-44-92-4Z" fill="url(#sea-coat)" stroke="#372E36" stroke-width="9" stroke-linejoin="round"/>
+    <path d="m104 178-23 19 13 17 30-13-20-23Z" fill="#F7CF77" stroke="#372E36" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M134 154c8 19 20 30 39 32 7 1 13-3 13-9 0-6-6-10-13-11-10-2-17-11-22-23l-17 11Z" fill="#F4C56E"/>
+    <path d="m170 167 29-9 2 10-23 14-8-15Z" fill="#EFDBA4" stroke="#372E36" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M110 110c-7-22 1-48 23-62 23-14 53-8 68 14 12 17 13 38 7 54-6 17-23 31-47 35l-34-13-17-28Z" fill="url(#gold-hair)" stroke="#372E36" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M120 78c5-19 21-32 41-31 11 1 18 4 23 11-18 0-25 9-28 20-5 17-21 20-36 19V78Z" fill="#FFE89D" stroke="#372E36" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M119 107c3-18 16-30 32-32 21-3 39 10 42 30l-1 20c-2 20-18 34-38 34-21 0-35-17-35-39v-13Z" fill="#F3BD8D" stroke="#372E36" stroke-width="8"/>
+    <path d="M142 115c5-5 11-5 16-1" stroke="#503640" stroke-width="5" stroke-linecap="round"/>
+    <path d="M171 113c5-4 10-4 14 0" stroke="#503640" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="151" cy="124" rx="4" ry="5" fill="#263439"/><ellipse cx="180" cy="122" rx="4" ry="5" fill="#263439"/>
+    <path d="M159 143c7 6 14 6 20 0" stroke="#A44848" stroke-width="5" stroke-linecap="round"/>
+    <path d="m130 94 19-3-2 20-16 2-1-19Zm37-1 18-2-1 19-17 2V93Z" fill="#7FE8D0" fill-opacity=".7" stroke="#3B5052" stroke-width="5"/>
+    <path d="M146 94h21" stroke="#4C5550" stroke-width="6" stroke-linecap="round"/>
+    <path d="m197 181 29 3 14-17c4-5 13-4 16 2l8 14-7 8-19-3-12 25-31-3 2-29Z" fill="#D5F16B" stroke="#372E36" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m239 174 25-4 7 10-21 9-11-15Z" fill="#4DAA9C" stroke="#372E36" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M100 147c-18 2-32 13-37 31l32-7 18-12-13-12Z" fill="#F4C56E" stroke="#372E36" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m90 176 24 7" stroke="#FFF1B0" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Brasa: broad-shouldered trail keeper in layered copper armor. -->
+  <g>
+    <ellipse cx="450" cy="274" rx="79" ry="15" fill="#34221D" opacity=".46" filter="url(#soft-shadow)"/>
+    <path d="m397 203-24 40c-5 9 0 18 11 18h39l13-53-39-5Z" fill="#51454A" stroke="#332A32" stroke-width="9" stroke-linejoin="round"/>
+    <path d="m462 207 8 48c2 10 9 13 20 12l31-4c10-1 13-11 7-18l-33-42-33 4Z" fill="#59464A" stroke="#332A32" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M382 124c-13 18-15 47-8 74 6 22 22 36 47 38l48-2c24-5 38-24 34-55l-9-51-112-4Z" fill="url(#sun-leather)" stroke="#332A32" stroke-width="10" stroke-linejoin="round"/>
+    <path d="m388 160-29 17-7 26 12 13 20-18 19-19-15-19Z" fill="#D77C4A" stroke="#332A32" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M416 159c9 15 24 24 44 21l13-12-5-11-32 2-11-15-9 15Z" fill="#F1C578"/>
+    <path d="M388 119c-2-26 11-48 34-59 23-11 54-4 68 18 10 16 12 36 3 53l-30 17-52-3-23-26Z" fill="url(#ember-armor)" stroke="#332A32" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M398 80c16-16 41-20 58-10l-11 20-41 5-6-15Z" fill="#F2A85D" stroke="#332A32" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M405 102c3-16 16-27 32-28 22-2 41 13 42 35l-2 24c-2 18-17 31-38 30-21-1-35-17-35-38l1-23Z" fill="#B96C4D" stroke="#332A32" stroke-width="8"/>
+    <path d="M408 118c7-6 14-6 20-2" stroke="#452F32" stroke-width="6" stroke-linecap="round"/>
+    <path d="M446 116c6-5 12-5 18-1" stroke="#452F32" stroke-width="6" stroke-linecap="round"/>
+    <ellipse cx="420" cy="128" rx="4" ry="6" fill="#212A2C"/><ellipse cx="458" cy="127" rx="4" ry="6" fill="#212A2C"/>
+    <path d="M421 147c10 10 23 10 34 0" stroke="#633B38" stroke-width="6" stroke-linecap="round"/>
+    <path d="m393 91 70-27 13 16-20 17-8 9-46-3-9-12Z" fill="#F2C96E" stroke="#332A32" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m377 173-19 10 8 18 19-8-8-20Z" fill="#D6F36C" stroke="#332A32" stroke-width="6"/>
+    <path d="M471 168c19-2 32 5 43 18 5 6 4 15-3 18-6 3-12 0-16-6l-16-11-16 1 8-20Z" fill="#F6C88A" stroke="#332A32" stroke-width="8" stroke-linejoin="round"/>
+    <path d="m495 180 25-10 6 11-22 14-9-15Z" fill="#B36C48" stroke="#332A32" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M382 137c-17-5-30-1-39 10l25 19 22-12-8-17Z" fill="#D88450" stroke="#332A32" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m365 155 20 8" stroke="#F6D48C" stroke-width="5" stroke-linecap="round"/>
+    <path d="m393 224-7 15m93-12 11 17" stroke="#F5C46B" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Volta: curious mechanic carrying a hand-wound arc coil. -->
+  <g>
+    <ellipse cx="750" cy="273" rx="77" ry="15" fill="#201B3B" opacity=".45" filter="url(#soft-shadow)"/>
+    <path d="m700 207-12 38c-3 10 3 18 14 18h33l7-49-42-7Z" fill="#4D467A" stroke="#352E48" stroke-width="8" stroke-linejoin="round"/>
+    <path d="m758 211 2 41c0 10 7 15 18 14l28-3c10-1 14-9 8-17l-29-38-27 3Z" fill="#575085" stroke="#352E48" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M694 137c-10 19-13 47-5 70 6 18 22 29 44 31l46-4c24-6 34-24 29-51l-8-49-106 3Z" fill="url(#violet-suit)" stroke="#352E48" stroke-width="9" stroke-linejoin="round"/>
+    <path d="m706 162 38 8-10 46-43-8 15-46Z" fill="#8266BA" stroke="#352E48" stroke-width="6" stroke-linejoin="round"/>
+    <path d="m760 169 35-9 9 38-37 12-7-41Z" fill="#B88AE5" stroke="#352E48" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M707 108c-7-26 5-51 27-65 25-16 58-8 72 16 10 16 10 39 0 55-9 16-26 27-48 27-23 0-43-13-51-33Z" fill="url(#lilac-hair)" stroke="#352E48" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M716 77c11-24 36-34 59-24 11 4 21 15 23 28-16-7-26-5-37 8-11 13-27 13-45 7V77Z" fill="#E7CDFF" stroke="#352E48" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M720 104c3-17 17-29 34-29 21 0 36 16 36 37l-2 20c-2 18-17 29-36 28-20-1-34-17-34-37l2-19Z" fill="#E8B49B" stroke="#352E48" stroke-width="8"/>
+    <path d="M731 115c5-5 11-5 16-1m19-1c5-5 11-5 16-1" stroke="#41364E" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="741" cy="126" rx="4" ry="5" fill="#243039"/><ellipse cx="776" cy="126" rx="4" ry="5" fill="#243039"/>
+    <path d="M745 146c8 6 17 6 24 0" stroke="#985A76" stroke-width="5" stroke-linecap="round"/>
+    <path d="m725 94 22-3-1 20-20 2-1-19Zm34-2 22-2v20l-21 2-1-20Z" fill="#8EEAE0" fill-opacity=".72" stroke="#4D465E" stroke-width="5"/>
+    <path d="M747 95h13" stroke="#4D465E" stroke-width="5"/>
+    <path d="M789 163c13-18 28-20 42-8l-9 23-17 12-16-8v-19Z" fill="#D6F36C" stroke="#352E48" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m824 143 7-26 11-8 7 11-9 22-8 12-8-11Z" fill="#74D9D0" stroke="#352E48" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M840 107c-12-10-9-21 2-28 11 7 13 17 2 28" stroke="#A8F3D9" stroke-width="4" stroke-linecap="round"/>
+    <path d="m842 109 17-9" stroke="#A8F3D9" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="865" cy="98" r="7" fill="#D7F373" stroke="#352E48" stroke-width="4"/>
+    <path d="M690 162c-15-1-27 7-31 19l24 13 17-13-10-19Z" fill="#E8B49B" stroke="#352E48" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m679 180 17 6" stroke="#F5D69B" stroke-width="5" stroke-linecap="round"/>
+    <path d="m700 137-9-18m94 14 13-14" stroke="#F0D8FF" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>
